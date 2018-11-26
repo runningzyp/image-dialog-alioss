@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Upload-alioss</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/editor.md-master/css/editormd.css" />
+
+</head>
+
+<body>
+    <div id="input" class="editor">
+        <div id="upload-editormd">
+            <textarea></textarea>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../static/jquery-3.3.1.min.js"></script>
+<script src="../static/editor.md-master/editormd.min.js"></script>
+<script src="../static/editor.md-master/plugins/img-dialog-alioss/img-dialog-alioss.js"></script>
+1
+
+<script>
+    var uploadtEditor;
+    $SCRIPT_ROOT = "http://127.0.0.1:5000"; //你的本地服务器根地址
+    $(function () {
+        uploadEditor = editormd("upload-editormd", {
+            width: '80%',
+            height: '800px',
+            syncScrolling: "single",
+            path: "{{url_for('static',filename= 'editor.md-master/lib/')}}",
+            imageUpload: true,
+            imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+            toolbarIcons: function () {
+                return ["bold", "del", "italic", "hr", "image", "alioss", "table", "datetime", "|",
+                    "preview", "watch", "|", "fullscreen"
+                ];
+            },
+            toolbarIconsClass: {
+                alioss: "fa-cloud-upload"
+            },
+            toolbarHandlers: {
+                alioss: function (cm, icon, cursor, selection) {
+                    this.imageDialogAli();
+                }
+            },
+            aliyunTokenUrl: $SCRIPT_ROOT, //本地服务器获取阿里云token的url
+        });
+
+    })
+</script>
+
+
+
+</html>

@@ -1,0 +1,16 @@
+# Python:
+*.py[cod]
+*.so
+*.egg
+*.egg-info
+dist
+build
+.vscode/
+__pycache__/
+*.pyc
+venv
+/files/*
+!/files/readme.md
+.DS_Store
+/.idea
+migrations/

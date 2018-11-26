@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>hello</title>
+<link rel="stylesheet" type="text/css" href="../static/bootstrap.min.css">
+</head>
+<body>
+
+   
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <button id ='button2' class="btn btn-default"> 测试</button>
+            <form role="form" action="#">
+                
+                <div class="form-group">
+                    选择文件:<input type="file" id= 'file' name="file" /><br />
+                </div>
+                <button id ='button1' class="btn btn-default"> Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+<script src="../static/jquery-3.3.1.min.js"></script>
+<script src="../static/jquery.base64.js"></script>
+
+<script type="text/javascript">
+
+var token = {};
+
+
+$(document).ready(function(){
+    get_token()
+});
+
+function get_token(){
+         $.ajax({
+            url: '',
+            type: "POST",
+            async: true,
+            cache: false,
+            contentType: "false",
+            dataType: "json",
+            processData:false,
+            success: function (data) {
+               token = data
+            },
+            error: function (data) {
+                alert('error');
+            }
+        });
+     }
+$("#button1").click(function () {
+
+    var current_time = Date.parse(new Date());
+    current_time/=1000;// gmt 时间精确到秒即可
+    
+    if (current_time > token['expire']){
+        //当前令牌已经过期,重新申请
+        get_token()
+    }
+
+    var file = document.getElementById("file")
+    var ossData = new FormData();
+    ossData.append('OSSAccessKeyId', token['accessid']);
+    ossData.append('policy', token['policy']);
+    ossData.append('Signature', token['signature']);
+    ossData.append('key','dir/'+'['+ current_time +']'+file.files[0].name);//文件名保存为当前时间戳+文件名
+    ossData.append('success_action_status', 200); // 指定返回的状态码
+    ossData.append('callback',token['callback']);
+    ossData.append("file", file.files[0]);
+      $.ajax({
+                url:token['host'],  
+                type:'POST',
+                data:ossData,
+                dataType: 'json', // 这里加个对返回内容的类型指定
+                processData: false,//不需要进行序列化处理
+                async: true,//发送同步请求
+                contentType: false,
+                success:function (data) {
+                     alert('success')
+                     alert(data)
+                     alert(data.filename)
+                },  
+                error: function(xhr) {
+                    alert("错误提示： " + xhr.status + " " + xhr.statusText); 
+                }
+            });
+        return false;
+
+ });
+
+</script>
+
+</html>
