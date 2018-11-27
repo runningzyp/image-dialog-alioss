@@ -24,14 +24,21 @@ image-dialog-alioss 为项目文件目录,其中的同名js文件为插架主文
 
 本项目使用python3 flask做服务器端,使用前需要配置python 开发环境
 
-**克隆项目到本地**
-`git clone http://github.com/runningzyp/image-dialog-alioss.git`
-**进入项目目录**
-`cd imgae-dialog-alioss`
-**配置环境**
-`pip3 install -r requirements.txt`
-**运行服务器**
-`python3 appserver.py`
+1. **克隆项目到本地**
+
+    `git clone http://github.com/runningzyp/image-dialog-alioss.git`
+
+2. **进入项目目录**
+
+    `cd imgae-dialog-alioss`
+
+3. **配置环境**
+
+    `pip3 install -r requirements.txt`
+
+4. **运行服务器**
+
+    `python3 appserver.py`
 
 浏览器访问 http://127.0.0.1:5000/upload 即可
 
